@@ -10,7 +10,11 @@ class Post {
   final int afkir;
   final int panen;
 
-  Post({this.death, this.afkir, this.execution, this.panen});
+  Post({
+    this.death,
+    this.afkir,
+    this.execution,
+    this.panen});
 
   factory Post.fromJson(Map<int, dynamic> json){
     return Post(
@@ -34,6 +38,7 @@ class Post {
   Future<Post> createPost(String url, {Map body}) async {
     return http.post(url, body: body).then((http.Response response) {
       final int statusCode = response.statusCode;
+      print(statusCode);
 
       if (statusCode < 200 || statusCode > 400 || json == null) {
         throw new Exception("Error while fetching data");

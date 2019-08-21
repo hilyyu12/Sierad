@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:sierad/api_service.dart';
-import 'package:sierad/form_input.dart';
+//import 'package:sierad/api_service.dart';
+//import 'package:sierad/form_input.dart';
 
 
 class Urls {
@@ -62,66 +62,67 @@ class _LoginState extends State<Login>{
                   RaisedButton(
                       color: Colors.green,
                       shape: StadiumBorder(),
-                      onPressed: () async {
-                        print(_phoneController);
-//                        Navigator.pushNamed(context, '/second');
+                      onPressed: ()
+                        {Navigator.pushNamed(context, '/second');},
 //                        setState(() {
 //                          _isLoading = true;
 //                        });
-                        final users = await ApiService.getUserList();
-//                        setState(() {
-//                          _isLoading = false;
-//                        });
-                        if (users == null) {
-                          showDialog(
-                              context: context,
-                              builder: (context) {
-                                return AlertDialog(
-                                  title: Text('Error'),
-                                  content: Text("Check your internet connection"),
-                                  actions: <Widget>[
-                                    FlatButton(
-                                      child: Text('Ok'),
-                                      onPressed: () {
-                                        Navigator.pop(context);
-                                      },
-                                    )
-                                  ],
-                                );
-                              }
-                          );
-                          return;
-                        } else {
-                          final userWithUsernameExists = users.any((u) => u['phone'] == int.parse(_phoneController.text));
-                          print(_phoneController);
-                          if (userWithUsernameExists) {
-                            Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                    builder: (context) => Home()
-                                )
-                            );
-                          } else {
-                            showDialog(
-                                context: context,
-                                builder: (context) {
-                                  return AlertDialog(
-                                    title: Text('Incorrect username'),
-                                    content: Text('Try with a different username'),
-                                    actions: <Widget>[
-                                      FlatButton(
-                                        child: Text('Ok'),
-                                        onPressed: () {
-                                          Navigator.pop(context);
-                                        },
-                                      )
-                                    ],
-                                  );
-                                }
-                            );
-                          }
-                        }
-                      },
+//                      async {
+//                        print(_phoneController);
+//                        final users = await ApiService.getUserList();
+////                        setState(() {
+////                          _isLoading = false;
+////                        });
+//                        if (users == null) {
+//                          showDialog(
+//                              context: context,
+//                              builder: (context) {
+//                                return AlertDialog(
+//                                  title: Text('Error'),
+//                                  content: Text("Check your internet connection"),
+//                                  actions: <Widget>[
+//                                    FlatButton(
+//                                      child: Text('Ok'),
+//                                      onPressed: () {
+//                                        Navigator.pop(context);
+//                                      },
+//                                    )
+//                                  ],
+//                                );
+//                              }
+//                          );
+//                          return;
+//                        } else {
+//                          final userWithUsernameExists = users.any((u) => u['phone'] == int.parse(_phoneController.text));
+//                          print(_phoneController);
+//                          if (userWithUsernameExists) {
+//                            Navigator.push(
+//                                context,
+//                                MaterialPageRoute(
+//                                    builder: (context) => Home()
+//                                )
+//                            );
+//                          } else {
+//                            showDialog(
+//                                context: context,
+//                                builder: (context) {
+//                                  return AlertDialog(
+//                                    title: Text('Incorrect username'),
+//                                    content: Text('Try with a different username'),
+//                                    actions: <Widget>[
+//                                      FlatButton(
+//                                        child: Text('Ok'),
+//                                        onPressed: () {
+//                                          Navigator.pop(context);
+//                                        },
+//                                      )
+//                                    ],
+//                                  );
+//                                }
+//                            );
+//                          }
+//                        }
+//                      },
                       child:   Text(
                           "Lanjutkan",
                           style: const TextStyle(

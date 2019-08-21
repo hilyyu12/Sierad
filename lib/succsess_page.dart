@@ -1,16 +1,17 @@
 import 'package:flutter/material.dart';
+import 'package:responsive_container/responsive_container.dart';
 
 // ignore: camel_case_types
 class scsPage extends StatelessWidget{
   @override
   Widget build(BuildContext context) {
-    return new Container(
-      decoration: BoxDecoration(
-          gradient: LinearGradient(
-              begin: Alignment(0.12363281100988388, 0.12076587975025176),
-              end: Alignment(1.2712695598602295, 1.106432557106018),
-              colors: [const Color(0xff00be39), const Color(0xff8de748)])
-      ),
+    return  Container(
+    decoration: BoxDecoration(
+      gradient:  LinearGradient(
+            begin: Alignment(0.12363281100988388, 0.12076587975025176),
+            end: Alignment(1.2712695598602295, 1.106432557106018),
+            colors: [const Color(0xff00be39), const Color(0xff8de748)])
+    ),
       child: new Center(
        child: Column(
          mainAxisAlignment: MainAxisAlignment.center,
