@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:sierad/succsess_page.dart';
 import 'package:sierad/form_input.dart';
 import 'package:sierad/login_screen.dart';
+import 'package:sierad/splash_screen.dart';
+import 'package:sierad/kandang.dart';
 
 void main() {
   runApp(MaterialApp(
@@ -11,10 +13,12 @@ void main() {
     initialRoute: '/',
     routes: {
       // When navigating to the "/" route, build the FirstScreen widget.
-      '/': (context) => Login(),
+      '/': (context) => SplashScreen(),
       // When navigating to the "/second" route, build the SecondScreen widget.
-      '/second': (context) => Home(),
-      '/third': (context) => scsPage(),
+      '/dua': (context) => Login(),
+      '/tiga': (context) => Home(),
+      '/empat': (contex) => scsPage(),
+      '/lima': (context) => PilihKandang(),
     },
   ));
 }

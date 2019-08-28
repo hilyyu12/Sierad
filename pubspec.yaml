@@ -40,6 +40,7 @@ flutter:
   assets:
     - assets/ava.png
     - assets/ava2.png
+    - assets/sierad.png
 
   # The following line ensures that the Material Icons font is
   # included with your application, so that you can use the icons in

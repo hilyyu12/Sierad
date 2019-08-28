@@ -9,21 +9,15 @@ import 'dart:convert';
 class Post {
   final String death;
   final String execution;
-  final String afkir;
-  final String panen;
 
   Post({
     this.death,
-    this.afkir,
-    this.execution,
-    this.panen});
+    this.execution,});
 
   factory Post.fromJson(Map<String, dynamic> json){
     return Post(
         death: json['death'],
         execution: json['execution'],
-        afkir: json['afkir'],
-        panen: json['panen']
     );
   }
 
@@ -31,8 +25,6 @@ class Post {
     var map = new Map<String, dynamic>();
     map["death"] = death;
     map["execution"] = execution;
-    map["afkir"] = afkir;
-    map["panen"] = panen;
     return map;
   }
 }
@@ -41,32 +33,30 @@ class Post {
 
 
 // ignore: must_be_immutable
- class Home extends StatelessWidget{
+class Home extends StatelessWidget{
   final Future<Post> post;
-  
+
   Home({Key key, this.post}) : super(key: key);
 //   ignore: non_constant_identifier_names
   static final Create_Post_Url = 'http://35.201.8.6:5002/api/v1/SieradProduce/';
   TextEditingController death = new TextEditingController();
   TextEditingController execution = new TextEditingController();
-  TextEditingController afkir = new TextEditingController();
-  TextEditingController panen = new TextEditingController();
-  
 
-   Future<Post> createPost(String url, {Map body}) async {
-     return http.post(url, body: body).then((http.Response response) {
-       final int statusCode = response.statusCode;
-       print(statusCode);
 
-       if (statusCode < 200 || statusCode > 400 || json == null) {
-         throw new Exception("Error while fetching data");
-       }
-       else{
+  Future<Post> createPost(String url, {Map body}) async {
+    return http.post(url, body: body).then((http.Response response) {
+      final int statusCode = response.statusCode;
+      print(statusCode);
 
-       }
-       return Post.fromJson(json.decode(response.body));
-     });
-   }
+      if (statusCode < 200 || statusCode > 400 || json == null) {
+        throw new Exception("Error while fetching data");
+      }
+      else{
+
+      }
+      return Post.fromJson(json.decode(response.body));
+    });
+  }
 
 
   @override
@@ -223,126 +213,6 @@ class Post {
                     ),
                   ),
 
-                  new Padding(padding: EdgeInsets.only(top: 10.0)),
-                  Column(
-                    children: <Widget>[
-                      SizedBox(
-                        width: double.infinity,
-                        child: Container(
-                          child: Text(
-                            "Afkir",
-                            style: const TextStyle(
-                                fontSize: 18.0,
-                                color: Colors.grey,
-                                fontStyle:  FontStyle.normal,
-                                fontWeight: FontWeight.w600,
-                                fontFamily: "SFProText"
-                            ),
-                            textAlign: TextAlign.left,
-                          ),
-                        ),
-                      ),
-                    ],
-                  ),
-                  new SizedBox(
-//                  width: 335,
-//                  height: 35,
-                    child: new Row(
-                      children: <Widget>[
-                        new Container(
-                          child:new Flexible(
-                            child:  TextField(
-                              controller: afkir,
-                              style: const TextStyle(
-                                  fontSize: 17.0,
-                                  color: Colors.grey,
-                                  fontStyle:  FontStyle.normal,
-                                  fontWeight: FontWeight.w600,
-                                  fontFamily: "SFProText"
-                              ),
-                              decoration: InputDecoration(
-                                contentPadding: new EdgeInsets.symmetric(vertical: 15.0, horizontal: 5.0),
-                                border: OutlineInputBorder(
-                                    borderSide: BorderSide()
-                                ),
-                              ),
-                              keyboardType: TextInputType.number,
-                              autofocus: true,
-                            ),
-                          ),//flexible
-                        ),//container
-                        new Text("   Ekor",
-                          style: const TextStyle(
-                              fontSize: 19.0,
-                              color: Colors.grey,
-                              fontStyle:  FontStyle.normal,
-                              fontWeight: FontWeight.w600,
-                              fontFamily: "SFProText"
-                          ),),
-                      ],//widget
-                    ),
-                  ),
-
-                  new Padding(padding: EdgeInsets.only(top: 10.0)),
-                  Column(
-                    children: <Widget>[
-                      SizedBox(
-                        width: double.infinity,
-                        child: Container(
-                          child: Text(
-                            "Panen",
-                            style: const TextStyle(
-                                fontSize: 18.0,
-                                color: Colors.grey,
-                                fontStyle:  FontStyle.normal,
-                                fontWeight: FontWeight.w600,
-                                fontFamily: "SFProText"
-                            ),
-                            textAlign: TextAlign.left,
-                          ),
-                        ),
-                      ),
-                    ],
-                  ),
-                  new SizedBox(
-//                  width: 335,
-//                  height: 35,
-                    child: new Row(
-                      children: <Widget>[
-                        new Container(
-                          child:new Flexible(
-                            child:  TextField(
-                              controller: panen,
-                              style: const TextStyle(
-                                  fontSize: 17.0,
-                                  color: Colors.grey,
-                                  fontStyle:  FontStyle.normal,
-                                  fontWeight: FontWeight.w600,
-                                  fontFamily: "SFProText"
-                              ),
-                              decoration: InputDecoration(
-                                contentPadding: new EdgeInsets.symmetric(vertical: 15.0, horizontal: 5.0),
-                                border: OutlineInputBorder(
-                                    borderSide: BorderSide()
-                                ),
-                              ),
-                              keyboardType: TextInputType.number,
-                              autofocus: true,
-                            ),
-                          ),//flexible
-                        ),//container
-                        new Text("   Ekor",
-                          style: const TextStyle(
-                              fontSize: 19.0,
-                              color: Colors.grey,
-                              fontStyle:  FontStyle.normal,
-                              fontWeight: FontWeight.w600,
-                              fontFamily: "SFProText"
-                          ),),
-                      ],//widget
-                    ),
-                  ),
-
                   new Padding(padding: EdgeInsets.only(top: 15.0)),
                   new SizedBox(
                     width: double.infinity,
@@ -352,9 +222,9 @@ class Post {
                         color: Colors.green,
                         shape: RoundedRectangleBorder(),
                         onPressed: ()
-                     async   {
-                        Post newPost = new Post (death: death.text,execution: execution.text, afkir: afkir.text, panen: panen.text);
-                        await createPost(Create_Post_Url, body: newPost.toMap());
+                        async   {
+                          Post newPost = new Post (death: death.text,execution: execution.text, );
+                          await createPost(Create_Post_Url, body: newPost.toMap());
                         },
                         child:   Text(
                             "LANJUTKAN",
@@ -431,7 +301,7 @@ class Post {
                         fontStyle:  FontStyle.normal,
                         fontSize: 17.0
                     )),
-                   onTap: () {Navigator.pushNamed(context, '/lima');},
+                onTap: () {Navigator.pushNamed(context, '/lima');},
               ),
               ListTile(
                 title: Text("Pengaturan Akun",

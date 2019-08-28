@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:responsive_container/responsive_container.dart';
+//import 'package:responsive_container/responsive_container.dart';
 
 // ignore: camel_case_types
 class scsPage extends StatelessWidget{
