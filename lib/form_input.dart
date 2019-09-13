@@ -3,14 +3,13 @@ import 'package:flutter/material.dart';
 import 'package:responsive_container/responsive_container.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
-//import 'package:sierad/succsess_page.dart';
-//import 'package:sierad/succsess_page.dart';
+//import 'package:sierad/kandang.dart';
 
 class Post {
-  final String death;
-  final String execution;
-  final String afkir;
-  final String panen;
+  final int death;
+  final int execution;
+  final int afkir;
+  final int panen;
 
   Post({
     this.death,
@@ -18,7 +17,7 @@ class Post {
     this.execution,
     this.panen});
 
-  factory Post.fromJson(Map<String, dynamic> json){
+  factory Post.fromJson(Map<int, dynamic> json){
     return Post(
         death: json['death'],
         execution: json['execution'],
@@ -37,43 +36,34 @@ class Post {
   }
 }
 
+Future<Post> createPost(String url, {Map body}) async {
+  return http.post(url, body: body).then((http.Response response) {
+    final int statusCode = response.statusCode;
+    print(statusCode);
+
+    if (statusCode < 200 || statusCode > 400 || json == null) {
+      throw new Exception("Error while fetching data");
+    }
+    return Post.fromJson(json.decode(response.body));
+  });
+}
 
 
+class Home extends StatelessWidget{
 
-// ignore: must_be_immutable
- class Home extends StatelessWidget{
   final Future<Post> post;
-  
   Home({Key key, this.post}) : super(key: key);
 //   ignore: non_constant_identifier_names
-  static final Create_Post_Url = 'http://35.201.8.6:5002/api/v1/SieradProduce/';
-  TextEditingController death = new TextEditingController();
-  TextEditingController execution = new TextEditingController();
-  TextEditingController afkir = new TextEditingController();
-  TextEditingController panen = new TextEditingController();
-  
-
-   Future<Post> createPost(String url, {Map body}) async {
-     return http.post(url, body: body).then((http.Response response) {
-       final int statusCode = response.statusCode;
-       print(statusCode);
-
-       if (statusCode < 200 || statusCode > 400 || json == null) {
-         throw new Exception("Error while fetching data");
-       }
-       else{
-
-       }
-       return Post.fromJson(json.decode(response.body));
-     });
-   }
-
+  static final Create_Post_Url = 'http://35.201.8.6:5004/api/v1/DailyInput/';
+  final TextEditingController  death = new TextEditingController();
+  final TextEditingController  execution = new TextEditingController();
+  final TextEditingController  afkir = new TextEditingController();
+  final TextEditingController  panen = new TextEditingController();
 
   @override
   Widget build(BuildContext context) {
     // TODO: implement build
     return MaterialApp(
-//      title: "WEB SERVICE",
       home: Scaffold(
         body:
         Center(
@@ -125,13 +115,11 @@ class Post {
                     ],
                   ),
                   new SizedBox(
-//
                     child: new Row(
                       children: <Widget>[
                         new Container(
                           child:new Flexible(
-//                          flex: 5,
-                            child:  TextField(
+                            child:  TextFormField(
                               controller: death,
                               style: const TextStyle(
                                   fontSize: 17.0,
@@ -191,7 +179,7 @@ class Post {
                       children: <Widget>[
                         new Container(
                           child:new Flexible(
-                            child:  TextField(
+                            child:  TextFormField(
                               controller: execution,
                               style: const TextStyle(
                                   fontSize: 17.0,
@@ -251,7 +239,7 @@ class Post {
                       children: <Widget>[
                         new Container(
                           child:new Flexible(
-                            child:  TextField(
+                            child:  TextFormField(
                               controller: afkir,
                               style: const TextStyle(
                                   fontSize: 17.0,
@@ -311,7 +299,7 @@ class Post {
                       children: <Widget>[
                         new Container(
                           child:new Flexible(
-                            child:  TextField(
+                            child:  TextFormField(
                               controller: panen,
                               style: const TextStyle(
                                   fontSize: 17.0,
@@ -352,9 +340,10 @@ class Post {
                         color: Colors.green,
                         shape: RoundedRectangleBorder(),
                         onPressed: ()
-                     async   {
-                        Post newPost = new Post (death: death.text,execution: execution.text, afkir: afkir.text, panen: panen.text);
-                        await createPost(Create_Post_Url, body: newPost.toMap());
+                        async   {
+                          Post newPost = new Post (death: int.parse(death.text),execution: int.parse(execution.text),afkir: int.parse(afkir.text),panen: int.parse(panen.text));
+                          Post p = await createPost(Create_Post_Url, body: newPost.toMap());
+                          print(p);
                         },
                         child:   Text(
                             "LANJUTKAN",
@@ -401,7 +390,7 @@ class Post {
               ),
               new Padding(padding: EdgeInsets.only(top: 40.0)),
               ListTile(
-                title: Text("Halaman Utama",
+                title: Text("Kandang",
                     style: const TextStyle(
                         color: Colors.grey,
                         fontWeight: FontWeight.w600,
@@ -409,7 +398,7 @@ class Post {
                         fontStyle:  FontStyle.normal,
                         fontSize: 17.0
                     )),
-                onTap: () {Navigator.pushNamed(context, '/tiga');},
+                onTap: () {Navigator.pushNamed(context, '/Lima');},
               ),
               ListTile(
                 title: Text("Riwayat Input",
@@ -420,10 +409,10 @@ class Post {
                         fontStyle:  FontStyle.normal,
                         fontSize: 17.0
                     )),
-                onTap: () {Navigator.pushNamed(context, '/tiga');},
+                onTap: () {Navigator.pushNamed(context, '/his');},
               ),
               ListTile(
-                title: Text("Daftar Kandang",
+                title: Text("Kebijakan",
                     style: const TextStyle(
                         color: Colors.grey,
                         fontWeight: FontWeight.w600,
@@ -431,7 +420,7 @@ class Post {
                         fontStyle:  FontStyle.normal,
                         fontSize: 17.0
                     )),
-                   onTap: () {Navigator.pushNamed(context, '/lima');},
+//                onTap: () {Navigator.pushNamed(context, '/lima');},
               ),
               ListTile(
                 title: Text("Pengaturan Akun",
@@ -468,5 +457,5 @@ class Post {
   }
 }
 
-//
-//void main() => runApp(Home());
+
+void main() => runApp(Home());

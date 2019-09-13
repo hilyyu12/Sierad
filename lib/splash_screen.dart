@@ -8,7 +8,7 @@ class SplashScreen extends StatelessWidget{
       home: Scaffold(
         body: Center(
           child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
+            mainAxisAlignment: MainAxisAlignment.end,
             children: <Widget>[
               Image.asset('assets/sierad.png'),
               new SizedBox(

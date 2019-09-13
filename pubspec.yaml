@@ -17,6 +17,7 @@ environment:
   sdk: ">=2.1.0 <3.0.0"
 
 dependencies:
+  intl: 0.16.0
   dio: 2.1.13
   http: ^0.12.0+2
   flutter:
@@ -41,6 +42,10 @@ flutter:
     - assets/ava.png
     - assets/ava2.png
     - assets/sierad.png
+    - assets/image_1.png
+    - assets/image_2.png
+    - assets/image_3.png
+    - assets/image_4.png
 
   # The following line ensures that the Material Icons font is
   # included with your application, so that you can use the icons in

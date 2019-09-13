@@ -5,58 +5,60 @@ import 'package:http/http.dart' as http;
 import 'dart:convert';
 //import 'package:sierad/succsess_page.dart';
 //import 'package:sierad/succsess_page.dart';
+import 'package:sierad/form_input.dart';
+
+
 
 class Post {
-  final String death;
-  final String execution;
+  final String awal_populasi;
+  final String catatan;
 
   Post({
-    this.death,
-    this.execution,});
+    this.awal_populasi,
+    this.catatan,});
 
   factory Post.fromJson(Map<String, dynamic> json){
     return Post(
-        death: json['death'],
-        execution: json['execution'],
+        awal_populasi: json['awal_populasi'],
+        catatan: json['catatan'],
     );
   }
 
+
+
   Map toMap() {
     var map = new Map<String, dynamic>();
-    map["death"] = death;
-    map["execution"] = execution;
+    map["awal_populasi"] = awal_populasi;
+    map["catatan"] = catatan;
     return map;
   }
 }
 
+Future<Post>createPost(String url, {Map body}) async {
+  return http.post(url, body: body).then((http.Response response) {
+    final int statusCode = response.statusCode;
+    print(statusCode);
+
+    if (statusCode == 200 || statusCode == 201 ) {
+      BuildContext context;
+      Navigator.push(context, new MaterialPageRoute(builder: (context) =>new Home()));
+    }
+    return Post.fromJson(json.decode(response.body));
+  });
+
+}
 
 
-
-// ignore: must_be_immutable
-class Home extends StatelessWidget{
+class Month extends StatelessWidget{
   final Future<Post> post;
 
-  Home({Key key, this.post}) : super(key: key);
+
+  Month({Key key, this.post}) : super(key: key);
 //   ignore: non_constant_identifier_names
-  static final Create_Post_Url = 'http://35.201.8.6:5002/api/v1/SieradProduce/';
-  TextEditingController death = new TextEditingController();
-  TextEditingController execution = new TextEditingController();
+  static final Create_Post_Url = 'http://35.201.8.6:5004/api/v1/MonthlyInput/';
+  TextEditingController awal_populasi = new TextEditingController();
+  TextEditingController catatan = new TextEditingController();
 
-
-  Future<Post> createPost(String url, {Map body}) async {
-    return http.post(url, body: body).then((http.Response response) {
-      final int statusCode = response.statusCode;
-      print(statusCode);
-
-      if (statusCode < 200 || statusCode > 400 || json == null) {
-        throw new Exception("Error while fetching data");
-      }
-      else{
-
-      }
-      return Post.fromJson(json.decode(response.body));
-    });
-  }
 
 
   @override
@@ -66,7 +68,8 @@ class Home extends StatelessWidget{
 //      title: "WEB SERVICE",
       home: Scaffold(
         body:
-        Center(
+        Form(
+          child: Center(
 //            child: new AspectRatio(
 //                aspectRatio: 100/50,
             child: ResponsiveContainer(
@@ -76,20 +79,14 @@ class Home extends StatelessWidget{
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: <Widget>[
 
-                  new Column(
-                    children: <Widget>[
-                      Text("Daily Input",
-                        style: const TextStyle(
-                            fontSize: 25.0,
-                            color: Colors.grey,
-                            fontStyle:  FontStyle.normal,
-                            fontWeight: FontWeight.w600,
-                            fontFamily: "SFProText"
-                        ),),
-//                IconButton(icon: Image.asset("assets/ava.png"), onPressed: (){Scaffold.of(context).openDrawer();})
-
-                    ],
-                  ),
+                  Text("Populasi Awal",
+                    style: const TextStyle(
+                        fontSize: 25.0,
+                        color: Colors.grey,
+                        fontStyle:  FontStyle.normal,
+                        fontWeight: FontWeight.w600,
+                        fontFamily: "SFProText"
+                    ),),
 //                new Padding(padding: EdgeInsets.only(top: 15.0)),
 
                   Column(
@@ -100,7 +97,7 @@ class Home extends StatelessWidget{
 //                        heightPercent: 5.0, //value percent of screen total height
 //                        widthPercent: 5.0,
                           child: Text(
-                            "Mati",
+                            "Populasi Awal",
                             style: const TextStyle(
                                 fontSize: 18.0,
                                 color: Colors.grey,
@@ -114,15 +111,14 @@ class Home extends StatelessWidget{
                       ),
                     ],
                   ),
+                  new Padding(padding: EdgeInsets.only(top: 6.0)),
                   new SizedBox(
-//
                     child: new Row(
                       children: <Widget>[
                         new Container(
                           child:new Flexible(
-//                          flex: 5,
-                            child:  TextField(
-                              controller: death,
+                            child:  TextFormField(
+                              controller: awal_populasi,
                               style: const TextStyle(
                                   fontSize: 17.0,
                                   color: Colors.grey,
@@ -136,7 +132,7 @@ class Home extends StatelessWidget{
                                     borderSide: BorderSide()
                                 ),
                               ),
-                              keyboardType: TextInputType.number,
+                              keyboardType: TextInputType.text,
                               autofocus: true,
                             ),
                           ),//flexible
@@ -160,7 +156,7 @@ class Home extends StatelessWidget{
                         width: double.infinity,
                         child: Container(
                           child: Text(
-                            "Eksekusi",
+                            "Catatan",
                             style: const TextStyle(
                                 fontSize: 18.0,
                                 color: Colors.grey,
@@ -181,8 +177,8 @@ class Home extends StatelessWidget{
                       children: <Widget>[
                         new Container(
                           child:new Flexible(
-                            child:  TextField(
-                              controller: execution,
+                            child:  TextFormField(
+                              controller: catatan,
                               style: const TextStyle(
                                   fontSize: 17.0,
                                   color: Colors.grey,
@@ -191,24 +187,18 @@ class Home extends StatelessWidget{
                                   fontFamily: "SFProText"
                               ),
                               decoration: InputDecoration(
-                                contentPadding: new EdgeInsets.symmetric(vertical: 15.0, horizontal: 5.0),
+                                contentPadding: new EdgeInsets.symmetric(vertical: 3.0, horizontal: 5.0),
                                 border: OutlineInputBorder(
                                     borderSide: BorderSide()
                                 ),
                               ),
-                              keyboardType: TextInputType.number,
+                              keyboardType: TextInputType.text,
                               autofocus: true,
+                              maxLength: 300,
+                              maxLines: 10,
                             ),
                           ),//flexible
                         ),//container
-                        new Text("   Ekor",
-                          style: const TextStyle(
-                              fontSize: 19.0,
-                              color: Colors.grey,
-                              fontStyle:  FontStyle.normal,
-                              fontWeight: FontWeight.w600,
-                              fontFamily: "SFProText"
-                          ),),
                       ],//widget
                     ),
                   ),
@@ -223,7 +213,7 @@ class Home extends StatelessWidget{
                         shape: RoundedRectangleBorder(),
                         onPressed: ()
                         async   {
-                          Post newPost = new Post (death: death.text,execution: execution.text, );
+                          Post newPost = new Post (awal_populasi: awal_populasi.text,catatan: catatan.text, );
                           await createPost(Create_Post_Url, body: newPost.toMap());
                         },
                         child:   Text(
@@ -242,6 +232,7 @@ class Home extends StatelessWidget{
                 ],
               ),)
 //            )
+        ),
         ),
         endDrawer: new Drawer(
           child: Column(
@@ -271,7 +262,7 @@ class Home extends StatelessWidget{
               ),
               new Padding(padding: EdgeInsets.only(top: 40.0)),
               ListTile(
-                title: Text("Halaman Utama",
+                title: Text("Kandang",
                     style: const TextStyle(
                         color: Colors.grey,
                         fontWeight: FontWeight.w600,
@@ -279,7 +270,7 @@ class Home extends StatelessWidget{
                         fontStyle:  FontStyle.normal,
                         fontSize: 17.0
                     )),
-                onTap: () {Navigator.pushNamed(context, '/tiga');},
+                onTap: () {Navigator.pushNamed(context, '/Lima');},
               ),
               ListTile(
                 title: Text("Riwayat Input",
@@ -290,10 +281,10 @@ class Home extends StatelessWidget{
                         fontStyle:  FontStyle.normal,
                         fontSize: 17.0
                     )),
-                onTap: () {Navigator.pushNamed(context, '/tiga');},
+                onTap: () {Navigator.pushNamed(context, '/his');},
               ),
               ListTile(
-                title: Text("Daftar Kandang",
+                title: Text("Kebijakan",
                     style: const TextStyle(
                         color: Colors.grey,
                         fontWeight: FontWeight.w600,
@@ -301,7 +292,7 @@ class Home extends StatelessWidget{
                         fontStyle:  FontStyle.normal,
                         fontSize: 17.0
                     )),
-                onTap: () {Navigator.pushNamed(context, '/lima');},
+//                onTap: () {Navigator.pushNamed(context, '/lima');},
               ),
               ListTile(
                 title: Text("Pengaturan Akun",
@@ -337,6 +328,7 @@ class Home extends StatelessWidget{
     );
   }
 }
+
 
 //
 //void main() => runApp(Home());

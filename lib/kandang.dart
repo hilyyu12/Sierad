@@ -1,322 +1,78 @@
 import 'package:flutter/material.dart';
+//import 'package:responsive_container/responsive_container.dart';
+//import 'package:sierad/form_input.dart';
+import 'package:http/http.dart' as http;
+import 'package:sierad/monthly_input.dart';
+import 'dart:convert';
+import 'package:sierad/history.dart';
 import 'package:responsive_container/responsive_container.dart';
+
+class Lantai {
+  String nama_lantai;
+
+
+  Lantai({
+    this.nama_lantai,
+
+  });
+
+  factory Lantai.fromJson(Map<String, dynamic> json) {
+    return Lantai(
+      nama_lantai: json['nama_lantai'],
+
+    );
+  }
+}
+
 
 class PilihKandang extends StatefulWidget{
   @override
   _PilihKandangState createState() => _PilihKandangState();
 }
 class _PilihKandangState extends State<PilihKandang>{
-  var _value = "1";
+  final String uri = 'http://35.201.8.6:5004/api/v1/lantai/';
+  Lantai _currentLantai;
 
-  DropdownButton _itemDown() => DropdownButton<String>(
-    items: [
-      DropdownMenuItem(
-        value: "3",
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: <Widget>[
-            SizedBox(width: 10),
-            Text(
-              "Kandang",
-            ),
-          ],
-        ),
-      ),
-      DropdownMenuItem(
-        value: "1",
-        child:
-          RaisedButton(
-              onPressed: (){
-                Navigator.pushNamed(context, '/tiga');
-              },
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: <Widget>[
-              SizedBox(width: 10),
-              Text(
-                "Lantai 1",
-              ),
-            ],
-          ),
-          )
-      ),
-      DropdownMenuItem(
-          value: "2",
-          child:
-          RaisedButton(
-            onPressed: (){
-              Navigator.pushNamed(context, '/tiga');
-            },
-            color: Colors.white,
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: <Widget>[
-                SizedBox(width: 10),
-                Text(
-                  "Lantai 2",
-                ),
-              ],
-            ),
-          )
-      ),
-    ],
-    onChanged: (value) {
-      setState(() {
-        _value = value;
-      });
-    },
-    isDense: true,
-    value: _value,
-    isExpanded: true,
-  );
+  List data;
 
-  DropdownButton _itemDown2() => DropdownButton<String>(
-    items: [
-      DropdownMenuItem(
-        value: "3",
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: <Widget>[
-            SizedBox(width: 10),
-            Text(
-              "Kandang",
-            ),
-          ],
-        ),
-      ),
-      DropdownMenuItem(
-          value: "1",
-          child:
-          RaisedButton(
-            onPressed: (){
-              Navigator.pushNamed(context, '/tiga');
-            },
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: <Widget>[
-                SizedBox(width: 10),
-                Text(
-                  "Lantai 1",
-                ),
-              ],
-            ),
-          )
-      ),
-      DropdownMenuItem(
-          value: "2",
-          child:
-          RaisedButton(
-            onPressed: (){
-              Navigator.pushNamed(context, '/tiga');
-            },
-            color: Colors.white,
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: <Widget>[
-                SizedBox(width: 10),
-                Text(
-                  "Lantai 2",
-                ),
-              ],
-            ),
-          )
-      ),
-    ],
-    onChanged: (value) {
-      setState(() {
-        _value = value;
-      });
-    },
-    isDense: true,
-    value: _value,
-    isExpanded: true,
-  );
+  Future<String> getData() async {
+    var response = await http.get(
+        Uri.encodeFull("http://35.201.8.6:5004/api/v1/kandang/"),
+        headers: {
+          "Accept": "application/json"
+        }
+    );
 
-  DropdownButton _itemDown3() => DropdownButton<String>(
-    items: [
-      DropdownMenuItem(
-        value: "3",
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: <Widget>[
-            SizedBox(width: 10),
-            Text(
-              "Kandang",
-            ),
-          ],
-        ),
-      ),
-      DropdownMenuItem(
-          value: "1",
-          child:
-          RaisedButton(
-            onPressed: (){
-              Navigator.pushNamed(context, '/tiga');
-            },
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: <Widget>[
-                SizedBox(width: 10),
-                Text(
-                  "Lantai 1",
-                ),
-              ],
-            ),
-          )
-      ),
-      DropdownMenuItem(
-          value: "2",
-          child:
-          RaisedButton(
-            onPressed: (){
-              Navigator.pushNamed(context, '/tiga');
-            },
-            color: Colors.white,
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: <Widget>[
-                SizedBox(width: 10),
-                Text(
-                  "Lantai 2",
-                ),
-              ],
-            ),
-          )
-      ),
-    ],
-    onChanged: (value) {
-      setState(() {
-        _value = value;
-      });
-    },
-    isDense: true,
-    value: _value,
-    isExpanded: true,
-  );
+    this.setState(() {
+      data = json.decode(response.body);
+    });
+    print(data);
 
-  DropdownButton _itemDown4() => DropdownButton<String>(
-    items: [
-      DropdownMenuItem(
-        value: "3",
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: <Widget>[
-            SizedBox(width: 10),
-            Text(
-              "Kandang",
-            ),
-          ],
-        ),
-      ),
-      DropdownMenuItem(
-          value: "1",
-          child:
-          RaisedButton(
-            onPressed: (){
-              Navigator.pushNamed(context, '/tiga');
-            },
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: <Widget>[
-                SizedBox(width: 10),
-                Text(
-                  "Lantai 1",
-                ),
-              ],
-            ),
-          )
-      ),
-      DropdownMenuItem(
-          value: "2",
-          child:
-          RaisedButton(
-            onPressed: (){
-              Navigator.pushNamed(context, '/tiga');
-            },
-            color: Colors.white,
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: <Widget>[
-                SizedBox(width: 10),
-                Text(
-                  "Lantai 2",
-                ),
-              ],
-            ),
-          )
-      ),
-    ],
-    onChanged: (value) {
-      setState(() {
-        _value = value;
-      });
-    },
-    isDense: true,
-    value: _value,
-    isExpanded: true,
-  );
+    return "Success!";
+  }
 
-  DropdownButton _itemDown5() => DropdownButton<String>(
-    items: [
-      DropdownMenuItem(
-        value: "3",
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: <Widget>[
-            SizedBox(width: 10),
-            Text(
-              "Kandang",
-            ),
-          ],
-        ),
-      ),
-      DropdownMenuItem(
-          value: "1",
-          child:
-          RaisedButton(
-            onPressed: (){
-              Navigator.pushNamed(context, '/tiga');
-            },
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: <Widget>[
-                SizedBox(width: 10),
-                Text(
-                  "Lantai 1",
-                ),
-              ],
-            ),
-          )
-      ),
-      DropdownMenuItem(
-          value: "2",
-          child:
-          RaisedButton(
-            onPressed: (){
-              Navigator.pushNamed(context, '/tiga');
-            },
-            color: Colors.white,
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: <Widget>[
-                SizedBox(width: 10),
-                Text(
-                  "Lantai 2",
-                ),
-              ],
-            ),
-          )
-      ),
-    ],
-    onChanged: (value) {
-      setState(() {
-        _value = value;
-      });
-    },
-    isDense: true,
-    value: _value,
-    isExpanded: true,
-  );
+  @override
+  void initState() {
+    super.initState();
+    this.getData();
+  }
+
+  Future<List<Lantai>> _fetchUsers() async {
+    var response = await http.get(uri);
+
+    if (response.statusCode == 200) {
+      final items = json.decode(response.body).cast<Map<String, dynamic>>();
+      List<Lantai> listOfUsers = items.map<Lantai>((json) {
+        return Lantai.fromJson(json);
+      }).toList();
+
+      return listOfUsers;
+    } else {
+      throw Exception('Failed to load internet');
+    }
+  }
+
+
 
 
   @override
@@ -325,64 +81,71 @@ class _PilihKandangState extends State<PilihKandang>{
     return MaterialApp(
       home: Scaffold(
         body: Center(
-            child: ResponsiveContainer(
-              widthPercent: 90,
-              heightPercent: 90,
-              child: Column(
-                children: <Widget>[
-                  Card(
-                    child: Column(
-                      children: <Widget>[
-                    Container(
-                      padding: EdgeInsets.symmetric(horizontal: 20),
-                      child: _itemDown(),
-                        ),
-                      ],
-                    ),
+          child: ResponsiveContainer(widthPercent: 90, heightPercent: 98,
+          child: ListView.builder(
+            itemCount: data == null ? 0 : data.length,
+            itemBuilder: (BuildContext context,int index){
+              return new Card(
+                child: new Container(
+                  child: new Row(
+                    children: <Widget>[
+                      new Text(data[index]["nama_kandang"],
+                        style: const TextStyle(
+                            fontSize: 18.0,
+                            color: Colors.grey,
+                            fontStyle:  FontStyle.normal,
+                            fontWeight: FontWeight.w400,
+                            fontFamily: "SFProText"
+                        ),),
+                      Padding(padding: EdgeInsets.only(right: 100.0),),
+                      FutureBuilder<List<Lantai>>(
+                          future: _fetchUsers(),
+                          builder: (BuildContext context,
+                              AsyncSnapshot<List<Lantai>> snapshot) {
+                            if (!snapshot.hasData) return CircularProgressIndicator();
+                            return DropdownButton<Lantai>(
+                              items: snapshot.data
+                                  .map((lantai) => DropdownMenuItem<Lantai>(
+                                child: new Column(
+                                  children: <Widget>[
+                                    FlatButton(
+                                      child: Text(lantai.nama_lantai,
+                                        textAlign: TextAlign.right,
+                                        style: const TextStyle(
+                                            fontSize: 16.0,
+                                            color: Colors.grey,
+                                            fontStyle:  FontStyle.normal,
+                                            fontWeight: FontWeight.w400,
+                                            fontFamily: "SFProText"
+                                        ),),
+                                      onPressed: (){
+                                        Navigator.push(context, MaterialPageRoute(builder: (context) => Month()),);
+                                      },
+                                    )
+                                  ],
+                                ),
+                                value: lantai,
+                              ))
+                                  .toList(),
+                              onChanged: (Lantai value) {
+                                setState(() {
+                                  _currentLantai = value;
+                                });
+                              },
+//                              isExpanded: false,
+                              elevation: 50,
+                              isDense: true,
+                              iconSize: 45.0,
+
+                            );
+                          }),
+                    ],
                   ),
-                  Card(
-                    child: Column(
-                      children: <Widget>[
-                        Container(
-                          padding: EdgeInsets.symmetric(horizontal: 20),
-                          child: _itemDown2(),
-                        ),
-                      ],
-                    ),
-                  ),
-                  Card(
-                    child: Column(
-                      children: <Widget>[
-                        Container(
-                          padding: EdgeInsets.symmetric(horizontal: 20),
-                          child: _itemDown3(),
-                        ),
-                      ],
-                    ),
-                  ),
-                  Card(
-                    child: Column(
-                      children: <Widget>[
-                        Container(
-                          padding: EdgeInsets.symmetric(horizontal: 20),
-                          child: _itemDown4(),
-                        ),
-                      ],
-                    ),
-                  ),
-                  Card(
-                    child: Column(
-                      children: <Widget>[
-                        Container(
-                          padding: EdgeInsets.symmetric(horizontal: 20),
-                          child: _itemDown5(),
-                        ),
-                      ],
-                    ),
-                  ),
-                ],
-              ),
-            )
+
+                ),
+              );
+            },
+          ),),
         ),
 
 
@@ -414,7 +177,7 @@ class _PilihKandangState extends State<PilihKandang>{
               ),
               new Padding(padding: EdgeInsets.only(top: 40.0)),
               ListTile(
-                title: Text("Halaman Utama",
+                title: Text("Kandang",
                     style: const TextStyle(
                         color: Colors.grey,
                         fontWeight: FontWeight.w600,
@@ -422,7 +185,7 @@ class _PilihKandangState extends State<PilihKandang>{
                         fontStyle:  FontStyle.normal,
                         fontSize: 17.0
                     )),
-                onTap: () {Navigator.pushNamed(context, '/tiga');},
+                onTap: () {Navigator.pushNamed(context, '/Lima');},
               ),
               ListTile(
                 title: Text("Riwayat Input",
@@ -433,10 +196,10 @@ class _PilihKandangState extends State<PilihKandang>{
                         fontStyle:  FontStyle.normal,
                         fontSize: 17.0
                     )),
-                onTap: () {Navigator.pushNamed(context, '/tiga');},
+                onTap: () {Navigator.push(context, MaterialPageRoute(builder: (context) => History()),);},
               ),
               ListTile(
-                title: Text("Daftar Kandang",
+                title: Text("Kebijakan",
                     style: const TextStyle(
                         color: Colors.grey,
                         fontWeight: FontWeight.w600,
@@ -444,7 +207,7 @@ class _PilihKandangState extends State<PilihKandang>{
                         fontStyle:  FontStyle.normal,
                         fontSize: 17.0
                     )),
-                onTap: () {Navigator.pushNamed(context, '/lima');},
+//                onTap: () {Navigator.pushNamed(context, '/lima');},
               ),
               ListTile(
                 title: Text("Pengaturan Akun",

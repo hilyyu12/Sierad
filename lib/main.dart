@@ -4,6 +4,8 @@ import 'package:sierad/form_input.dart';
 import 'package:sierad/login_screen.dart';
 import 'package:sierad/splash_screen.dart';
 import 'package:sierad/kandang.dart';
+import 'package:sierad/monthly_input.dart';
+import 'package:sierad/history.dart';
 
 void main() {
   runApp(MaterialApp(
@@ -19,6 +21,8 @@ void main() {
       '/tiga': (context) => Home(),
       '/empat': (contex) => scsPage(),
       '/lima': (context) => PilihKandang(),
+      '/enem': (context) => Month(),
+      '/his': (context) => History(),
     },
   ));
 }

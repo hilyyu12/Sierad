@@ -23,7 +23,7 @@ class _LoginState extends State<Login>{
   }
   
   login() async{
-    final response = await http.post("http://35.201.8.6:5002/api/v1/login/", body: {"phone": phone});
+    final response = await http.post("http://35.201.8.6:5004/api/v1/login/", body: {"phone": phone});
     final data = jsonDecode(response.body);
     print(data);
     if(response.statusCode == 200){
@@ -75,7 +75,7 @@ class _LoginState extends State<Login>{
                         decoration: new InputDecoration(
                             border: InputBorder.none
                         ),
-                        keyboardType: TextInputType.number,
+                        keyboardType: TextInputType.phone,
                         autofocus: true,
                       ),
                     ),
